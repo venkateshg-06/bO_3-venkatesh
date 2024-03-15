@@ -63,10 +63,85 @@ const productList = [
     }
   ];
 
+  function addtoCartContainer(){
+    cartsContainer.textContent = ""
+    for (let ch of cartItemsArray){
+      displayCartItems(ch)
+    }
+  }
+
+  function displayCartItems(eachItem){
+    
   
+  
+    let carditemContainer = document.createElement("div");
+      carditemContainer.classList.add("card")
+      carditemContainer.id = `${eachItem.product_id}`
+      cartsContainer.appendChild(carditemContainer)
+  
+      let imgItem = document.createElement("img")
+      imgItem.src= `${eachItem.image_url}`
+      imgItem.classList.add("image")
+      imgItem.id= "img-url"
+      carditemContainer.appendChild(imgItem)
+  
+      let cardFooterContainer = document.createElement("div");
+      cardFooterContainer.classList.add("card-footer-container")
+      carditemContainer.appendChild(cardFooterContainer)
+  
+      let textContainer = document.createElement("div")
+      textContainer.classList.add("text-container")
+      cardFooterContainer.appendChild(textContainer)
+    
+      let productName = document.createElement("p")
+      productName.textContent = `${eachItem.name}`
+      productName.classList.add("product-name")
+      textContainer.appendChild(productName)
+  
+      let productPrice = document.createElement("p")
+      productPrice.id = "product-price"
+      productPrice.textContent = `${eachItem.price}`
+      productPrice.classList.add("price")
+      textContainer.appendChild(productPrice)
 
- 
-
+      let quantity = document.createElement("p")
+      quantity.textContent = `Quantity: ${eachItem.quantity}`
+      quantity.style.color="black";
+      textContainer.appendChild(quantity)
+  
+  
+      let iconContainer = document.createElement("div")
+      iconContainer.classList.add("icon-container")
+      iconContainer.id = "product-cart"
+      cardFooterContainer.appendChild(iconContainer)
+  
+      let iconEl = document.createElement("i");
+      iconEl.setAttribute("class","fa-solid fa-x")
+      iconContainer.appendChild(iconEl)
+  
+     
+  }
+  
+  function pushItemIntoArray(eachItem){
+    let card = cartItemsArray.findIndex((each) => {
+     if (each.product_id === eachItem.product_id){
+       return true
+     }
+     else {
+       return false
+     }
+    })
+    console.log(eachItem)
+    if (card  === -1 ){
+      cartItemsArray.push(eachItem)
+    }else{
+      eachItem.quantity ++
+    }
+   
+      addtoCartContainer()
+    
+  }
+  
 
 function displayItems(eachItem){
     
@@ -102,6 +177,8 @@ function displayItems(eachItem){
     textContainer.appendChild(productPrice)
 
 
+
+
     let iconContainer = document.createElement("div")
     iconContainer.classList.add("icon-container")
     iconContainer.id = "product-cart"
@@ -119,56 +196,7 @@ function displayItems(eachItem){
    })
     
 }
-function displayCartItems(eachItem){
-  console.log(eachItem)
-  let heading = document.createElement("h1")
-  heading.textContent = "hello"
-  cartsContainer.appendChild(heading)
 
-  let carditemContainer = document.createElement("div");
-    carditemContainer.classList.add("card")
-    carditemContainer.id = `${eachItem.product_id}`
-    cartsContainer.appendChild(carditemContainer)
-
-    let imgItem = document.createElement("img")
-    imgItem.src= "https://m.media-amazon.com/images/I/419fThxc2FL._SX425_.jpg"
-    imgItem.classList.add("image")
-    imgItem.id= "img-url"
-    carditemContainer.appendChild(imgItem)
-
-    let cardFooterContainer = document.createElement("div");
-    cardFooterContainer.classList.add("card-footer-container")
-    carditemContainer.appendChild(cardFooterContainer)
-
-    let textContainer = document.createElement("div")
-    textContainer.classList.add("text-container")
-    cardFooterContainer.appendChild(textContainer)
-  
-    let productName = document.createElement("p")
-    productName.textContent = `${eachItem.name}`
-    productName.classList.add("product-name")
-    textContainer.appendChild(productName)
-
-    let productPrice = document.createElement("p")
-    productPrice.id = "product-price"
-    productPrice.textContent = `${eachItem.price}`
-    productPrice.classList.add("price")
-    textContainer.appendChild(productPrice)
-
-
-    let iconContainer = document.createElement("div")
-    iconContainer.classList.add("icon-container")
-    iconContainer.id = "product-cart"
-
-    iconContainer.setAttribute("data-product-id", `${eachItem.product_id}`);
-    cardFooterContainer.appendChild(iconContainer)
-
-    let iconEl = document.createElement("i");
-    iconEl.setAttribute("class","fa-solid fa-x")
-    iconContainer.appendChild(iconEl)
-
-   
-}
 
 
 for (let eachItem of productList){
@@ -178,20 +206,3 @@ for (let eachItem of productList){
 
 
 
-function pushItemIntoArray(eachItem){
-  let card = productList.find((each) => {
-   if (each.product_id === eachItem.product_id){
-     return true
-   }
-   else {
-     return false
-   }
-  })
-  console.log(eachItem)
-  if (card  === -1 ){
-    cartItemsArray.push(eachItem)
-  }
-  for (let eachItem of cartItemsArray){
-    displayCartItems(eachItem)
- }
-}
